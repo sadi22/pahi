@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui" />
+  
+  <!-- PWA Meta Tags -->
+  <meta name="application-name" content="Pahi App" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Pahi" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#6366f1" />
+  
+  <!-- Description -->
+  <meta name="description" content="Pahi - Community-driven ride booking application for Wairoa schools and families" />
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png" />
+  
+  <!-- Apple Touch Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  
+  <!-- Splash Screens for iOS -->
+  <link rel="apple-touch-startup-image" href="/splash/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
+  <link rel="apple-touch-startup-image" href="/splash/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" />
+  <link rel="apple-touch-startup-image" href="/splash/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" />
+  <link rel="apple-touch-startup-image" href="/splash/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" />
+  <link rel="apple-touch-startup-image" href="/splash/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" />
+  
+  <title>Pahi - Wairoa Community Rides</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <style>
+    /* Prevent pull-to-refresh and overscroll */
+    body {
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Remove default body padding - we'll handle safe areas in components */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Loading screen */
+    #app-loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    
+    #app-loading .logo {
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    #app-loading .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    #app-loading p {
+      color: white;
+      margin-top: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="app-loading">
+    <div class="logo">🚗</div>
+    <div class="spinner"></div>
+    <p>Loading Pahi App...</p>
+  </div>
+  
+  <div id="root"></div>
+  
+  <script type="module" src="/src/main.tsx"></script>
+  
+  <!-- Register Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then((registration) => {
+            console.log('ServiceWorker registered: ', registration);
+          })
+          .catch((error) => {
+            console.log('ServiceWorker registration failed: ', error);
+          });
+      });
+    }
+    
+    // Install prompt for PWA
+    let deferredPrompt;
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later
+      deferredPrompt = e;
+      // Update UI notify the user they can install the PWA
+      console.log('PWA install available');
+    });
+    
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA was installed');
+      deferredPrompt = null;
+    });
+    
+    // Remove loading screen when app loads
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const loading = document.getElementById('app-loading');
+        if (loading) {
+          loading.style.opacity = '0';
+          loading.style.transition = 'opacity 0.3s ease';
+          setTimeout(() => {
+            loading.style.display = 'none';
+          }, 300);
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

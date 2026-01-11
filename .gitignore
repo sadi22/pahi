@@ -1,0 +1,80 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite
+/dist/
+/.vite/
+
+# macOS
+.DS_Store
+
+# Build output
+/build/
+
+# Capacitor
+android/app/build/
+android/build/
+ios/App/build/
+ios/App/Pods/
+ios/App/Podfile.lock
+
+# Xcode
+ios/App.xcodeproj/
+ios/App.xcworkspace/
+ios/App/xcuserdata/
+ios/App/DerivedData/
+ios/App/Assets.xcassets/
+*.xcuserstate
+*.xcworkspace
+*.xcodeproj
+
+# Swift
+*.swp
+*.swo
+*.dSYM
+
+# Gradle
+.gradle/
+android/.gradle/
+android/gradle/
+android/gradlew*
+android/gradle.properties
+android/build.gradle
+android/settings.gradle
+
+# Cordova
+android/capacitor-cordova-android-plugins/
+ios/capacitor-cordova-ios-plugins/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# VS Code
+.vscode/
+
+# Others
+.idea/
+*.iml
+*.sublime-workspace
+*.sublime-project
+
+# Coverage
+coverage/
+
+# Misc
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Ignore Markdown backups
+*.md~

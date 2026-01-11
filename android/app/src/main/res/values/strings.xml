@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Pahi</string>
+    <string name="title_activity_main">Pahi</string>
+    <string name="package_name">com.pahi.app</string>
+    <string name="custom_url_scheme">com.pahi.app</string>
+</resources>

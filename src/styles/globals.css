@@ -1,0 +1,282 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1a1a1a;
+  --muted: #f8fafc;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #1a1a1a;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: transparent;
+  --input-background: #f8fafc;
+  --switch-background: #cbd5e1;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #94a3b8;
+  --radius: 0.75rem;
+  
+  /* Professional Blue-Gray Color Palette */
+  --app-primary: #2F6F9F;
+  --app-primary-dark: #1e4d6f;
+  --app-primary-light: #5699D2;
+  --app-secondary: #5699D2;
+  --app-accent: #E0F7FA;
+  --app-dark: #1F2937;
+  --app-warning: #f59e0b;
+  --app-danger: #ef4444;
+  --app-bg: #f8fafc;
+  --app-card: #ffffff;
+  --app-text-primary: #1F2937;
+  --app-text-secondary: #475569;
+  --app-text-tertiary: #94a3b8;
+  --app-border: #e2e8f0;
+  --app-shadow: rgba(31, 41, 55, 0.04);
+  --app-shadow-medium: rgba(31, 41, 55, 0.08);
+  --app-shadow-strong: rgba(31, 41, 55, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Animation for notification banner */
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-down {
+    animation: slide-down 0.3s ease-out;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
+    h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+      color: #0f172a;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #0f172a;
+    }
+
+    h4 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #1e293b;
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #475569;
+    }
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #334155;
+    }
+
+    button {
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Mobile-first - Full screen app for 1080x2400 and similar resolutions */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: fixed;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height - accounts for browser chrome */
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Enable smooth scrolling on content areas */
+#root main {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+/* Hide scrollbars but keep scroll functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Specifically for main content area */
+#root main::-webkit-scrollbar {
+  display: none;
+}
+
+#root main {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Professional shadows */
+.shadow-soft {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 4px rgba(15, 23, 42, 0.04);
+}
+
+.shadow-card {
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06), 0 4px 8px rgba(15, 23, 42, 0.04);
+}
+
+.shadow-elevated {
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.08), 0 8px 16px rgba(15, 23, 42, 0.06);
+}
+
+/* Professional gradients */
+.gradient-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+/* PWA Install Prompt Animation */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Smooth transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
