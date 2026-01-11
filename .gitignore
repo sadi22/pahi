@@ -36,14 +36,7 @@ ios/App/Assets.xcassets/
 *.swo
 *.dSYM
 
-# Gradle
-.gradle/
-android/.gradle/
-android/gradle/
-android/gradlew*
-android/gradle.properties
-android/build.gradle
-android/settings.gradle
+
 
 # Cordova
 android/capacitor-cordova-android-plugins/
